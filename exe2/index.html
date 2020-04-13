@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="listaTelefonica">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Telefônica</title>
+    <link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css">
+    <style>
+        .jumbotron{
+            width: 600px;
+            text-align: center;
+            margin: 20px auto auto;
+        }
+        .form-control{
+            margin: 10px 0px;
+        }
+        .contacts-data{
+            margin: 20px 0px;
+        }
+    </style>
+</head>
+<body ng-controller="listaTelefonicaCtrl">
+    <div class="jumbotron">
+        <h3 ng-bind="app"></h3>
+        <input class="form-control" type="text" ng-model="contato.nome" placeholder="Nome">
+        <input class="form-control" type="text" ng-model="contato.telefone" placeholder="Telefone">
+        <button class="btn btn-primary btn-block" ng-click="adicionarContato(contato)">Adicionar contato</button>
+        <table class="contacts-data table table-striped">
+            <tr>
+                <th>Nome</th>
+                <th>Telefone</th>
+                <tr ng-repeat="contato in contatos">
+                    <td ng-repeat="(key, value) in contato" ng-bind="value"></td>
+                </tr>
+            </tr>
+        </table>
+    </div>
+
+    <script src="libs/angular/angular.js"></script>
+    <script>
+        angular.module("listaTelefonica", []);
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function($scope){
+            $scope.app = "Lista Telefônica";
+            $scope.contatos = [
+                {nome: "Pedro", telefone: "987766172"},
+                {nome: "Ana", telefone:"987766172"},
+                {nome: "Maria", telefone:"987766172"}  
+            ];
+
+            $scope.adicionarContato = function(contato){
+                $scope.contatos.push(angular.copy(contato));
+                delete $scope.contato;
+            };
+        });
+    </script>
+</body>
+</html>
